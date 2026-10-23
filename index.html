@@ -31,7 +31,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            padding-bottom: 140px; /* مساحة للشريط السفلي والسلة */
+            padding-bottom: 140px;
         }
 
         header {
@@ -86,7 +86,7 @@
             color: var(--accent-gold);
         }
 
-        /* شبكة كروت المنتجات (Grid مثل التطبيق) */
+        /* شبكة كروت المنتجات */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -112,7 +112,7 @@
 
         .item-img {
             width: 100%;
-            height: 120px;
+            height: 130px;
             object-fit: cover;
             border-radius: 10px;
             margin-bottom: 8px;
@@ -154,7 +154,7 @@
             color: #000;
         }
 
-        /* السلة العائمة (تظهر فوق شريط التطبيق) */
+        /* السلة العائمة فوق الشريط */
         .cart-bar {
             position: fixed;
             bottom: 75px;
@@ -188,7 +188,7 @@
             margin-right: 6px;
         }
 
-        /* شريط التنقل السفلي المثبّت (Bottom App Navigation) */
+        /* شريط التنقل السفلي المثبّت */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -226,7 +226,7 @@
             font-weight: 700;
         }
 
-        /* نافذة السلة Modal */
+        /* Modal السلة */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -335,7 +335,7 @@
         <span id="cartTotal">0 ل.س</span>
     </div>
 
-    <!-- شريط التنقل التطبيقي (Bottom Navigation Bar) -->
+    <!-- شريط التنقل السفلي التطبيقي -->
     <nav class="bottom-nav">
         <div class="nav-item active" onclick="filterCategory('الحلويات', this)">
             <i class="fa-solid fa-cookie-bite"></i>
@@ -373,16 +373,57 @@
     </div>
 
     <script>
-        // البيانات التجريبية للمنيو مع الصور
+        // مصفوفة العناصر مع الصور الفعلية والمشابهة بدقة عالية
         const menuData = [
-            { id: 1, name: "وافل شوكلا", category: "الحلويات", price: 300, img: "https://via.placeholder.com/200/2a221d/d4af37?text=وافل+شوكلا" },
-            { id: 2, name: "ستيك وافل", category: "الحلويات", price: 240, img: "https://via.placeholder.com/200/2a221d/d4af37?text=ستيك+وافل" },
-            { id: 3, name: "وافل فواكه", category: "الحلويات", price: 450, img: "https://via.placeholder.com/200/2a221d/d4af37?text=وافل+فواكه" },
-            { id: 4, name: "كريب شوكلا", category: "الحلويات", price: 300, img: "https://via.placeholder.com/200/2a221d/d4af37?text=كريب+شوكلا" },
-            
-            { id: 5, name: "إركيلة تفاحتين", category: "إركيلة", price: 250, img: "https://via.placeholder.com/200/2a221d/d4af37?text=إركيلة" },
-            { id: 6, name: "موهيتو بلو", category: "موهيتو", price: 200, img: "https://via.placeholder.com/200/2a221d/d4af37?text=موهيتو" },
-            { id: 7, name: "سبانيش لاتيه", category: "قهوة باردة", price: 220, img: "https://via.placeholder.com/200/2a221d/d4af37?text=سبانيش+لاتيه" }
+            { 
+                id: 1, 
+                name: "وافل شوكلا", 
+                category: "الحلويات", 
+                price: 300, 
+                img: "https://www.mochacafesy.com/storage/products/1723145450_66b668ea5b112.jpeg" 
+            },
+            { 
+                id: 2, 
+                name: "ستيك وافل", 
+                category: "الحلويات", 
+                price: 240, 
+                img: "https://www.mochacafesy.com/storage/products/1723145532_66b6693c10321.jpeg" 
+            },
+            { 
+                id: 3, 
+                name: "وافل فواكه", 
+                category: "الحلويات", 
+                price: 450, 
+                img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=400&q=80" 
+            },
+            { 
+                id: 4, 
+                name: "كريب شوكلا", 
+                category: "الحلويات", 
+                price: 300, 
+                img: "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=400&q=80" 
+            },
+            { 
+                id: 5, 
+                name: "إركيلة تفاحتين", 
+                category: "إركيلة", 
+                price: 250, 
+                img: "https://images.unsplash.com/photo-1527016021513-b09758b777bd?auto=format&fit=crop&w=400&q=80" 
+            },
+            { 
+                id: 6, 
+                name: "موهيتو بلو", 
+                category: "موهيتو", 
+                price: 200, 
+                img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=400&q=80" 
+            },
+            { 
+                id: 7, 
+                name: "سبانيش لاتيه", 
+                category: "قهوة باردة", 
+                price: 220, 
+                img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80" 
+            }
         ];
 
         let cart = {};
@@ -401,7 +442,7 @@
                 const card = document.createElement('div');
                 card.className = 'menu-card';
                 card.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" class="item-img">
+                    <img src="${item.img}" alt="${item.name}" class="item-img" onerror="this.src='https://via.placeholder.com/200/2a221d/d4af37?text=${encodeURIComponent(item.name)}'">
                     <div class="item-title">${item.name}</div>
                     <div class="item-price">${item.price} ل.س</div>
                     <button class="add-btn" onclick="addToCart(${item.id})">
