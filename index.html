@@ -1,29 +1,549 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>abod</title>
-<link rel="stylesheet" href="index.css">
+    <title>موكا كافيه — القائمة والأسعار</title>
+    <!-- خط تجوال -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <style>
+        :root {
+            --bg-color: #120e0c;
+            --card-bg: #1d1714;
+            --accent-gold: #d4af37;
+            --text-main: #f5f5f5;
+            --text-muted: #a09891;
+            --border-color: #2e2621;
+            --radius: 12px;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 100px;
+        }
+
+        header {
+            text-align: center;
+            padding: 24px 16px 12px;
+            background: linear-gradient(180deg, rgba(29,23,20,0.9) 0%, rgba(18,14,12,0) 100%);
+        }
+
+        header h1 {
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* شريط البحث */
+        .search-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 42px 12px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-gold);
+        }
+
+        /* شريط التبويبات والتصنيفات */
+        .categories-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+
+        .categories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background-color: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        /* شبكة عناصر المنيو */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .menu-card:active {
+            transform: scale(0.98);
+        }
+
+        .item-info {
+            flex: 1;
+            padding-left: 12px;
+        }
+
+        .item-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            background-color: rgba(212, 175, 55, 0.15);
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--accent-gold);
+        }
+
+        .item-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .item-price {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .add-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-btn:hover, .add-btn:active {
+            background-color: var(--accent-gold);
+            color: #000;
+        }
+
+        /* السلة العائمة */
+        .cart-bar {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 568px;
+            background-color: var(--accent-gold);
+            color: #000;
+            padding: 14px 20px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            cursor: pointer;
+            z-index: 99;
+            font-weight: 700;
+        }
+
+        .cart-count {
+            background-color: #000;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            margin-right: 6px;
+        }
+
+        /* نافذة تفاصيل السلة (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-top: 2px solid var(--accent-gold);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            background: var(--border-color);
+            color: var(--text-main);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .send-whatsapp-btn {
+            width: 100%;
+            background-color: #25d366;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+    </style>
 </head>
 <body>
-        <div id="main-content" style = "display:none;">
-        
-        <div class="card">
-            <h1 class="main-title">  اهلا بكم في موقعي الاول 
-            
-            <p class="welcome-text">
-                شكرا لتفهمك وزيارة هذا الرابط اي حدا عندو فكرة لموقع ياريت يشاركني هي شكرا جزيلا 
-            </p>
 
-            <img src="me.jpg.jpeg" alt="صورة ترحيبية من عبود" class="my-image">
+    <header>
+        <h1>موكا كافيه</h1>
+        <p>قهوتك هون، ولحظتك أحلى ☕</p>
+    </header>
+
+    <div class="container">
+        <!-- شريط البحث -->
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="ابحث عن مشروب أو حلوى..." oninput="filterMenu()">
         </div>
 
+        <!-- أزرار التصنيفات -->
+        <div class="categories-scroll" id="categoriesContainer">
+            <button class="cat-btn active" onclick="filterCategory('الكل', this)">الكل</button>
+            <button class="cat-btn" onclick="filterCategory('قهوة باردة', this)">قهوة باردة</button>
+            <button class="cat-btn" onclick="filterCategory('مشروبات ساخنة', this)">مشروبات ساخنة</button>
+            <button class="cat-btn" onclick="filterCategory('موهيتو', this)">موهيتو</button>
+            <button class="cat-btn" onclick="filterCategory('عصير فرش', this)">عصير فرش</button>
+            <button class="cat-btn" onclick="filterCategory('الحلويات', this)">الحلويات</button>
+            <button class="cat-btn" onclick="filterCategory('كنافة', this)">كنافة</button>
+            <button class="cat-btn" onclick="filterCategory('إركيلة', this)">إركيلة</button>
+        </div>
+
+        <!-- قائمة المنتجات -->
+        <div class="menu-grid" id="menuGrid"></div>
     </div>
 
+    <!-- السلة العائمة -->
+    <div class="cart-bar" id="cartBar" onclick="openCartModal()" style="display: none;">
+        <div>
+            <span class="cart-count" id="cartCount">0</span>
+            <span>استعراض الطلب</span>
+        </div>
+        <span id="cartTotal">0 ل.س</span>
+    </div>
 
-<script src="abod.js"></script>
+    <!-- النافذة المنبثقة للسلة -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>طلباتك المختارة</h3>
+                <button class="close-btn" onclick="closeCartModal()">&times;</button>
+            </div>
+            <div id="cartItemsContainer"></div>
+            <div style="margin-top: 16px; text-align: left; font-size: 1.1rem; font-weight: 700;">
+                المجموع الكلي: <span id="modalTotal" style="color: var(--accent-gold);">0 ل.س</span>
+            </div>
+            <button class="send-whatsapp-btn" onclick="sendOrderToWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> إرسال الطلب عبر واتساب
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // قائمة البيانات التجريبية الشاملة للمقهى
+        const menuData = [
+            // قهوة باردة
+            { id: 1, name: "سبانيش لاتيه بارد", category: "قهوة باردة", price: 25000, desc: "إسبريسو غني مع الحليب المكثف المحلى والثلج", isBestSeller: true },
+            { id: 2, name: "آيس موكا", category: "قهوة باردة", price: 24000, desc: "مزبيج الإسبريسو مع الشوكولاتة والحليب البارد", isBestSeller: false },
+            { id: 3, name: "آيس أمريكانو", category: "قهوة باردة", price: 18000, desc: "جرعة إسبريسو مضاعفة مع الماء البارد والثلج", isBestSeller: false },
+
+            // مشروبات ساخنة
+            { id: 4, name: "كابتشينو", category: "مشروبات ساخنة", price: 18000, desc: "إسبريسو إيطالي مع رغوة الحليب المبخرة", isBestSeller: true },
+            { id: 5, name: "لاتيه كافيه", category: "مشروبات ساخنة", price: 19000, desc: "قهوة إسبريسو متوازنة مع الحليب الساخن", isBestSeller: false },
+            { id: 6, name: "شوكولاتة ساخنة (هوت شوكلت)", category: "مشروبات ساخنة", price: 20000, desc: "شوكولاتة بلجيكية غنية بالحليب الساخن", isBestSeller: false },
+
+            // موهيتو
+            { id: 7, name: "موهيتو بلو بليري", category: "موهيتو", price: 22000, desc: "نعناع طازج، ليمون، ونكهة التوت الأزرق المنعشة", isBestSeller: true },
+            { id: 8, name: "موهيتو فراولة", category: "موهيتو", price: 22000, desc: "قطع الليمون والنعناع مع سيروب الفراولة والغازات", isBestSeller: false },
+
+            // عصائر فرش
+            { id: 9, name: "عصير برتقال فرش", category: "عصير فرش", price: 16000, desc: "برتقال طازج معصور مع الطلب مباشرة", isBestSeller: false },
+            { id: 10, name: "ليمون ونعناع", category: "عصير فرش", price: 17000, desc: "عصير ليمون حامض منعش مضاف له النعناع الطازج", isBestSeller: true },
+
+            // حلويات وكنافة
+            { id: 11, name: "وافل نوتيلا", category: "الحلويات", price: 30000, desc: "وافل بلجيكي دافئ مغطى بشوكولاتة النوتيلا والقطع", isBestSeller: true },
+            { id: 12, name: "كريب سبيشال", category: "الحلويات", price: 32000, desc: "شرائح الكريب مع ثلاث أنواع من الشوكولاتة الفاخرة", isBestSeller: false },
+            { id: 13, name: "كنافة نابلسية بالجبنة", category: "كنافة", price: 35000, desc: "كنافة سخنة بالجبنة الذائبة والقطر المميز", isBestSeller: true },
+
+            // إركيلة
+            { id: 14, name: "إركيلة تفاحتين نخلة", category: "إركيلة", price: 30000, desc: "إركيلة فاخرة بنكهة التفاحتين الكلاسيكية", isBestSeller: true },
+            { id: 15, name: "إركيلة حامض ونعناع", category: "إركيلة", price: 30000, desc: "إركيلة منعشة بنكهة الحامض والنعناع", isBestSeller: false }
+        ];
+
+        let cart = {};
+        let currentCategory = 'الكل';
+
+        // عرض القائمة
+        function renderMenu(items) {
+            const grid = document.getElementById('menuGrid');
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                grid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 30px 0;">لا توجد أصناف مطابقة للبحث</p>`;
+                return;
+            }
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'menu-card';
+                card.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-title">
+                            ${item.name}
+                            ${item.isBestSeller ? '<span class="badge">الأكثر مبيعاً</span>' : ''}
+                        </div>
+                        <div class="item-desc">${item.desc}</div>
+                        <div class="item-price">${item.price.toLocaleString()} ل.س</div>
+                    </div>
+                    <button class="add-btn" onclick="addToCart(${item.id})">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // التصفية بحسب التبويب
+        function filterCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterMenu();
+        }
+
+        // البحث والفلترة
+        function filterMenu() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = menuData.filter(item => {
+                const matchesCat = currentCategory === 'الكل' || item.category === currentCategory;
+                const matchesSearch = item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+                return matchesCat && matchesSearch;
+            });
+            renderMenu(filtered);
+        }
+
+        // عمليات السلة
+        function addToCart(itemId) {
+            const item = menuData.find(i => i.id === itemId);
+            if (cart[itemId]) {
+                cart[itemId].qty++;
+            } else {
+                cart[itemId] = { ...item, qty: 1 };
+            }
+            updateCartUI();
+        }
+
+        function changeQty(itemId, delta) {
+            if (cart[itemId]) {
+                cart[itemId].qty += delta;
+                if (cart[itemId].qty <= 0) delete cart[itemId];
+            }
+            updateCartUI();
+            renderCartModalItems();
+        }
+
+        function updateCartUI() {
+            let totalCount = 0;
+            let totalPrice = 0;
+
+            Object.values(cart).forEach(item => {
+                totalCount += item.qty;
+                totalPrice += item.price * item.qty;
+            });
+
+            const cartBar = document.getElementById('cartBar');
+            if (totalCount > 0) {
+                cartBar.style.display = 'flex';
+                document.getElementById('cartCount').innerText = totalCount;
+                document.getElementById('cartTotal').innerText = totalPrice.toLocaleString() + ' ل.س';
+                document.getElementById('modalTotal').innerText = totalPrice.toLocaleString() + ' ل.س';
+            } else {
+                cartBar.style.display = 'none';
+                closeCartModal();
+            }
+        }
+
+        function openCartModal() {
+            renderCartModalItems();
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        function closeCartModal() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function renderCartModalItems() {
+            const container = document.getElementById('cartItemsContainer');
+            container.innerHTML = '';
+
+            Object.values(cart).forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div>
+                        <div style="font-weight: 700;">${item.name}</div>
+                        <div style="color: var(--text-muted); font-size: 0.85rem;">${(item.price * item.qty).toLocaleString()} ل.س</div>
+                    </div>
+                    <div class="cart-controls">
+                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                        <span>${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // إرسال الطلب عبر واتساب
+        function sendOrderToWhatsApp() {
+            const phone = "963900000000"; // حط رقم واتساب الكافيه هون
+            let text = "مرحباً موكا كافيه، أود تقديم الطلب التالي:\n\n";
+            let total = 0;
+
+            Object.values(cart).forEach(item => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                text += `• ${item.name} (عدد ${item.qty}) - ${subtotal.toLocaleString()} ل.س\n`;
+            });
+
+            text += `\n*الإجمالي:* ${total.toLocaleString()} ل.س`;
+
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
+        // التحميل الأولي للمنيو
+        renderMenu(menuData);
+    </script>
 </body>
 </html>
