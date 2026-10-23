@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موكا كافيه — القائمة</title>
+    <title>موكا كافيه — القائمة والأسعار</title>
     <!-- خط تجوال -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- أيقونات FontAwesome -->
@@ -36,19 +36,19 @@
 
         header {
             text-align: center;
-            padding: 20px 16px 10px;
+            padding: 24px 16px 12px;
             background: linear-gradient(180deg, rgba(29,23,20,0.9) 0%, rgba(18,14,12,0) 100%);
         }
 
         header h1 {
             color: var(--accent-gold);
-            font-size: 1.6rem;
-            margin-bottom: 4px;
+            font-size: 1.8rem;
+            margin-bottom: 6px;
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .container {
@@ -57,7 +57,71 @@
             padding: 0 16px;
         }
 
-        /* شريط البحث */
+        /* -------------------------------------- */
+        /* 1. صفحة الأقسام الرئيسية (الواجهة) */
+        /* -------------------------------------- */
+        #homePage {
+            display: block; /* تظهر أول ما يفتح الموقع */
+        }
+
+        .welcome-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin: 20px 0 16px;
+            color: var(--text-main);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .category-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-card:active {
+            transform: scale(0.97);
+            border-color: var(--accent-gold);
+        }
+
+        .cat-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .cat-info i {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .category-card i.arrow {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* -------------------------------------- */
+        /* 2. صفحة عرض المنتجات (المنيو) */
+        /* -------------------------------------- */
+        #menuPage {
+            display: none; /* مخفية في البداية */
+        }
+
         .search-box {
             position: relative;
             margin: 10px 0 16px;
@@ -86,7 +150,6 @@
             color: var(--accent-gold);
         }
 
-        /* شبكة كروت المنتجات */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -103,16 +166,11 @@
             align-items: center;
             text-align: center;
             position: relative;
-            transition: transform 0.2s;
-        }
-
-        .menu-card:active {
-            transform: scale(0.97);
         }
 
         .item-img {
             width: 100%;
-            height: 130px;
+            height: 120px;
             object-fit: cover;
             border-radius: 10px;
             margin-bottom: 8px;
@@ -146,7 +204,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: all 0.2s;
         }
 
         .add-btn:active {
@@ -154,7 +211,9 @@
             color: #000;
         }
 
-        /* السلة العائمة فوق الشريط */
+        /* -------------------------------------- */
+        /* 3. شريط التنقل السفلي والسلة */
+        /* -------------------------------------- */
         .cart-bar {
             position: fixed;
             bottom: 75px;
@@ -188,7 +247,6 @@
             margin-right: 6px;
         }
 
-        /* شريط التنقل السفلي المثبّت */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -196,12 +254,11 @@
             right: 0;
             background-color: #17120f;
             border-top: 1px solid var(--border-color);
-            display: flex;
+            display: none; /* يظهر فقط بعد اختيار قسم */
             justify-content: space-around;
             align-items: center;
             padding: 8px 0;
             z-index: 100;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.5);
         }
 
         .nav-item {
@@ -211,8 +268,6 @@
             color: var(--text-muted);
             font-size: 0.75rem;
             cursor: pointer;
-            text-decoration: none;
-            transition: color 0.2s;
             flex: 1;
         }
 
@@ -316,14 +371,51 @@
     </header>
 
     <div class="container">
-        <!-- شريط البحث -->
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="ابحث بالاسم..." oninput="filterMenu()">
+
+        <!-- 1. صفحة اختيار القسم (تظهر فور الفتح) -->
+        <div id="homePage">
+            <div class="welcome-title">ماذا تريد اليوم؟</div>
+            <div class="categories-grid">
+                <div class="category-card" onclick="selectCategory('الحلويات')">
+                    <div class="cat-info">
+                        <i class="fa-solid fa-cookie-bite"></i>
+                        <span>الحلويات</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-left arrow"></i>
+                </div>
+                <div class="category-card" onclick="selectCategory('إركيلة')">
+                    <div class="cat-info">
+                        <i class="fa-solid fa-smog"></i>
+                        <span>إركيلة</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-left arrow"></i>
+                </div>
+                <div class="category-card" onclick="selectCategory('موهيتو')">
+                    <div class="cat-info">
+                        <i class="fa-solid fa-glass-water"></i>
+                        <span>موهيتو</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-left arrow"></i>
+                </div>
+                <div class="category-card" onclick="selectCategory('قهوة باردة')">
+                    <div class="cat-info">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                        <span>قهوة باردة</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-left arrow"></i>
+                </div>
+            </div>
         </div>
 
-        <!-- شبكة المنتجات -->
-        <div class="menu-grid" id="menuGrid"></div>
+        <!-- 2. صفحة المنتجات (تظهر بعد الضغط على أي قسم) -->
+        <div id="menuPage">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="ابحث بالاسم..." oninput="filterMenu()">
+            </div>
+            <div class="menu-grid" id="menuGrid"></div>
+        </div>
+
     </div>
 
     <!-- السلة العائمة -->
@@ -335,27 +427,31 @@
         <span id="cartTotal">0 ل.س</span>
     </div>
 
-    <!-- شريط التنقل السفلي التطبيقي -->
-    <nav class="bottom-nav">
-        <div class="nav-item active" onclick="filterCategory('الحلويات', this)">
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav" id="bottomNav">
+        <div class="nav-item" id="nav-home" onclick="showHomePage()">
+            <i class="fa-solid fa-house"></i>
+            <span>الرئيسية</span>
+        </div>
+        <div class="nav-item" id="nav-الحلويات" onclick="selectCategory('الحلويات')">
             <i class="fa-solid fa-cookie-bite"></i>
             <span>الحلويات</span>
         </div>
-        <div class="nav-item" onclick="filterCategory('إركيلة', this)">
+        <div class="nav-item" id="nav-إركيلة" onclick="selectCategory('إركيلة')">
             <i class="fa-solid fa-smog"></i>
             <span>إركيلة</span>
         </div>
-        <div class="nav-item" onclick="filterCategory('موهيتو', this)">
+        <div class="nav-item" id="nav-موهيتو" onclick="selectCategory('موهيتو')">
             <i class="fa-solid fa-glass-water"></i>
             <span>موهيتو</span>
         </div>
-        <div class="nav-item" onclick="filterCategory('قهوة باردة', this)">
+        <div class="nav-item" id="nav-قهوة باردة" onclick="selectCategory('قهوة باردة')">
             <i class="fa-solid fa-mug-saucer"></i>
             <span>قهوة باردة</span>
         </div>
     </nav>
 
-    <!-- النافذة المنبثقة للسلة -->
+    <!-- Modal السلة -->
     <div class="modal-overlay" id="cartModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -373,61 +469,40 @@
     </div>
 
     <script>
-        // مصفوفة العناصر مع الصور الفعلية والمشابهة بدقة عالية
         const menuData = [
-            { 
-                id: 1, 
-                name: "وافل شوكلا", 
-                category: "الحلويات", 
-                price: 300, 
-                img: "https://www.mochacafesy.com/storage/products/1723145450_66b668ea5b112.jpeg" 
-            },
-            { 
-                id: 2, 
-                name: "ستيك وافل", 
-                category: "الحلويات", 
-                price: 240, 
-                img: "https://www.mochacafesy.com/storage/products/1723145532_66b6693c10321.jpeg" 
-            },
-            { 
-                id: 3, 
-                name: "وافل فواكه", 
-                category: "الحلويات", 
-                price: 450, 
-                img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=400&q=80" 
-            },
-            { 
-                id: 4, 
-                name: "كريب شوكلا", 
-                category: "الحلويات", 
-                price: 300, 
-                img: "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=400&q=80" 
-            },
-            { 
-                id: 5, 
-                name: "إركيلة تفاحتين", 
-                category: "إركيلة", 
-                price: 250, 
-                img: "https://images.unsplash.com/photo-1527016021513-b09758b777bd?auto=format&fit=crop&w=400&q=80" 
-            },
-            { 
-                id: 6, 
-                name: "موهيتو بلو", 
-                category: "موهيتو", 
-                price: 200, 
-                img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=400&q=80" 
-            },
-            { 
-                id: 7, 
-                name: "سبانيش لاتيه", 
-                category: "قهوة باردة", 
-                price: 220, 
-                img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80" 
-            }
+            { id: 1, name: "وافل شوكلا", category: "الحلويات", price: 300, img: "https://www.mochacafesy.com/storage/products/1723145450_66b668ea5b112.jpeg" },
+            { id: 2, name: "ستيك وافل", category: "الحلويات", price: 240, img: "https://www.mochacafesy.com/storage/products/1723145532_66b6693c10321.jpeg" },
+            { id: 3, name: "وافل فواكه", category: "الحلويات", price: 450, img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=400&q=80" },
+            { id: 4, name: "كريب شوكلا", category: "الحلويات", price: 300, img: "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=400&q=80" },
+            { id: 5, name: "إركيلة تفاحتين", category: "إركيلة", price: 250, img: "https://images.unsplash.com/photo-1527016021513-b09758b777bd?auto=format&fit=crop&w=400&q=80" },
+            { id: 6, name: "موهيتو بلو", category: "موهيتو", price: 200, img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=400&q=80" },
+            { id: 7, name: "سبانيش لاتيه", category: "قهوة باردة", price: 220, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80" }
         ];
 
         let cart = {};
-        let currentCategory = 'الحلويات';
+        let currentCategory = '';
+
+        // اختيار قسم والتحول لصفحة المنيو
+        function selectCategory(cat) {
+            currentCategory = cat;
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('menuPage').style.display = 'block';
+            document.getElementById('bottomNav').style.display = 'flex';
+
+            // تحديث الزر النشط في الشريط السفلي
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            const activeNav = document.getElementById(`nav-${cat}`);
+            if (activeNav) activeNav.classList.add('active');
+
+            filterMenu();
+        }
+
+        // العودة للصفحة الرئيسية
+        function showHomePage() {
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('menuPage').style.display = 'none';
+            document.getElementById('bottomNav').style.display = 'none';
+        }
 
         function renderMenu(items) {
             const grid = document.getElementById('menuGrid');
@@ -451,13 +526,6 @@
                 `;
                 grid.appendChild(card);
             });
-        }
-
-        function filterCategory(cat, el) {
-            currentCategory = cat;
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            if(el) el.classList.add('active');
-            filterMenu();
         }
 
         function filterMenu() {
@@ -529,37 +597,4 @@
                 div.innerHTML = `
                     <div>
                         <div style="font-weight: 700;">${item.name}</div>
-                        <div style="color: var(--text-muted); font-size: 0.85rem;">${item.price * item.qty} ل.س</div>
-                    </div>
-                    <div class="cart-controls">
-                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
-                        <span>${item.qty}</span>
-                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function sendOrderToWhatsApp() {
-            const phone = "963900000000";
-            let text = "مرحباً موكا كافيه، أود تقديم الطلب التالي:\n\n";
-            let total = 0;
-
-            Object.values(cart).forEach(item => {
-                const subtotal = item.price * item.qty;
-                total += subtotal;
-                text += `• ${item.name} (عدد ${item.qty}) - ${subtotal} ل.س\n`;
-            });
-
-            text += `\n*الإجمالي:* ${total} ل.س`;
-
-            const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
-        }
-
-        // تشغيل القسم الأول افتراضياً
-        filterMenu();
-    </script>
-</body>
-</html>
+                        <div style="color: var(--text-muted); font-size: 0.85rem;">${item.p
