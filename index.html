@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موكا كافيه — القائمة والأسعار</title>
+    <title>موكا كافيه — القائمة</title>
     <!-- خط تجوال -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- أيقونات FontAwesome -->
@@ -17,7 +17,7 @@
             --text-main: #f5f5f5;
             --text-muted: #a09891;
             --border-color: #2e2621;
-            --radius: 12px;
+            --radius: 14px;
         }
 
         * {
@@ -31,24 +31,24 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            padding-bottom: 100px;
+            padding-bottom: 140px; /* مساحة للشريط السفلي والسلة */
         }
 
         header {
             text-align: center;
-            padding: 24px 16px 12px;
+            padding: 20px 16px 10px;
             background: linear-gradient(180deg, rgba(29,23,20,0.9) 0%, rgba(18,14,12,0) 100%);
         }
 
         header h1 {
             color: var(--accent-gold);
-            font-size: 1.8rem;
-            margin-bottom: 6px;
+            font-size: 1.6rem;
+            margin-bottom: 4px;
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .container {
@@ -60,19 +60,18 @@
         /* شريط البحث */
         .search-box {
             position: relative;
-            margin-bottom: 16px;
+            margin: 10px 0 16px;
         }
 
         .search-box input {
             width: 100%;
-            padding: 12px 42px 12px 16px;
+            padding: 10px 40px 10px 14px;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
             color: var(--text-main);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
-            transition: border-color 0.3s;
         }
 
         .search-box input:focus {
@@ -87,43 +86,10 @@
             color: var(--accent-gold);
         }
 
-        /* شريط التبويبات والتصنيفات */
-        .categories-scroll {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-            scrollbar-width: none;
-        }
-
-        .categories-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .cat-btn {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 8px 16px;
-            border-radius: 20px;
-            white-space: nowrap;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .cat-btn.active, .cat-btn:hover {
-            background-color: var(--accent-gold);
-            color: #000;
-            border-color: var(--accent-gold);
-            font-weight: 700;
-        }
-
-        /* شبكة عناصر المنيو */
+        /* شبكة كروت المنتجات (Grid مثل التطبيق) */
         .menu-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
         }
 
@@ -131,88 +97,79 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
-            padding: 14px;
+            padding: 12px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            transition: transform 0.2s, border-color 0.2s;
+            text-align: center;
+            position: relative;
+            transition: transform 0.2s;
         }
 
         .menu-card:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
-        .item-info {
-            flex: 1;
-            padding-left: 12px;
+        .item-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            background-color: #2a221d;
         }
 
         .item-title {
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .badge {
-            background-color: rgba(212, 175, 55, 0.15);
-            color: var(--accent-gold);
-            font-size: 0.75rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            border: 1px solid var(--accent-gold);
-        }
-
-        .item-desc {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            line-height: 1.3;
+            margin-bottom: 6px;
         }
 
         .item-price {
             color: var(--accent-gold);
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
         }
 
         .add-btn {
             background-color: transparent;
             border: 1px solid var(--accent-gold);
             color: var(--accent-gold);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+            width: 100%;
+            padding: 6px 0;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            gap: 6px;
             transition: all 0.2s;
         }
 
-        .add-btn:hover, .add-btn:active {
+        .add-btn:active {
             background-color: var(--accent-gold);
             color: #000;
         }
 
-        /* السلة العائمة */
+        /* السلة العائمة (تظهر فوق شريط التطبيق) */
         .cart-bar {
             position: fixed;
-            bottom: 16px;
+            bottom: 75px;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 32px);
             max-width: 568px;
             background-color: var(--accent-gold);
             color: #000;
-            padding: 14px 20px;
-            border-radius: 16px;
+            padding: 12px 18px;
+            border-radius: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
             cursor: pointer;
             z-index: 99;
             font-weight: 700;
@@ -221,17 +178,55 @@
         .cart-count {
             background-color: #000;
             color: #fff;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin-right: 6px;
         }
 
-        /* نافذة تفاصيل السلة (Modal) */
+        /* شريط التنقل السفلي المثبّت (Bottom App Navigation) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #17120f;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 0;
+            z-index: 100;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.5);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.2s;
+            flex: 1;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        /* نافذة السلة Modal */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -317,29 +312,17 @@
 
     <header>
         <h1>موكا كافيه</h1>
-        <p>قهوتك هون، ولحظتك أحلى ☕</p>
+        <p>لحظات حلوة على ذوقك ☕</p>
     </header>
 
     <div class="container">
         <!-- شريط البحث -->
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="ابحث عن مشروب أو حلوى..." oninput="filterMenu()">
+            <input type="text" id="searchInput" placeholder="ابحث بالاسم..." oninput="filterMenu()">
         </div>
 
-        <!-- أزرار التصنيفات -->
-        <div class="categories-scroll" id="categoriesContainer">
-            <button class="cat-btn active" onclick="filterCategory('الكل', this)">الكل</button>
-            <button class="cat-btn" onclick="filterCategory('قهوة باردة', this)">قهوة باردة</button>
-            <button class="cat-btn" onclick="filterCategory('مشروبات ساخنة', this)">مشروبات ساخنة</button>
-            <button class="cat-btn" onclick="filterCategory('موهيتو', this)">موهيتو</button>
-            <button class="cat-btn" onclick="filterCategory('عصير فرش', this)">عصير فرش</button>
-            <button class="cat-btn" onclick="filterCategory('الحلويات', this)">الحلويات</button>
-            <button class="cat-btn" onclick="filterCategory('كنافة', this)">كنافة</button>
-            <button class="cat-btn" onclick="filterCategory('إركيلة', this)">إركيلة</button>
-        </div>
-
-        <!-- قائمة المنتجات -->
+        <!-- شبكة المنتجات -->
         <div class="menu-grid" id="menuGrid"></div>
     </div>
 
@@ -347,10 +330,30 @@
     <div class="cart-bar" id="cartBar" onclick="openCartModal()" style="display: none;">
         <div>
             <span class="cart-count" id="cartCount">0</span>
-            <span>استعراض الطلب</span>
+            <span>عرض الطلب</span>
         </div>
         <span id="cartTotal">0 ل.س</span>
     </div>
+
+    <!-- شريط التنقل التطبيقي (Bottom Navigation Bar) -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="filterCategory('الحلويات', this)">
+            <i class="fa-solid fa-cookie-bite"></i>
+            <span>الحلويات</span>
+        </div>
+        <div class="nav-item" onclick="filterCategory('إركيلة', this)">
+            <i class="fa-solid fa-smog"></i>
+            <span>إركيلة</span>
+        </div>
+        <div class="nav-item" onclick="filterCategory('موهيتو', this)">
+            <i class="fa-solid fa-glass-water"></i>
+            <span>موهيتو</span>
+        </div>
+        <div class="nav-item" onclick="filterCategory('قهوة باردة', this)">
+            <i class="fa-solid fa-mug-saucer"></i>
+            <span>قهوة باردة</span>
+        </div>
+    </nav>
 
     <!-- النافذة المنبثقة للسلة -->
     <div class="modal-overlay" id="cartModal">
@@ -361,7 +364,7 @@
             </div>
             <div id="cartItemsContainer"></div>
             <div style="margin-top: 16px; text-align: left; font-size: 1.1rem; font-weight: 700;">
-                المجموع الكلي: <span id="modalTotal" style="color: var(--accent-gold);">0 ل.س</span>
+                الإجمالي: <span id="modalTotal" style="color: var(--accent-gold);">0 ل.س</span>
             </div>
             <button class="send-whatsapp-btn" onclick="sendOrderToWhatsApp()">
                 <i class="fa-brands fa-whatsapp"></i> إرسال الطلب عبر واتساب
@@ -370,46 +373,27 @@
     </div>
 
     <script>
-        // قائمة البيانات التجريبية الشاملة للمقهى
+        // البيانات التجريبية للمنيو مع الصور
         const menuData = [
-            // قهوة باردة
-            { id: 1, name: "سبانيش لاتيه بارد", category: "قهوة باردة", price: 25000, desc: "إسبريسو غني مع الحليب المكثف المحلى والثلج", isBestSeller: true },
-            { id: 2, name: "آيس موكا", category: "قهوة باردة", price: 24000, desc: "مزبيج الإسبريسو مع الشوكولاتة والحليب البارد", isBestSeller: false },
-            { id: 3, name: "آيس أمريكانو", category: "قهوة باردة", price: 18000, desc: "جرعة إسبريسو مضاعفة مع الماء البارد والثلج", isBestSeller: false },
-
-            // مشروبات ساخنة
-            { id: 4, name: "كابتشينو", category: "مشروبات ساخنة", price: 18000, desc: "إسبريسو إيطالي مع رغوة الحليب المبخرة", isBestSeller: true },
-            { id: 5, name: "لاتيه كافيه", category: "مشروبات ساخنة", price: 19000, desc: "قهوة إسبريسو متوازنة مع الحليب الساخن", isBestSeller: false },
-            { id: 6, name: "شوكولاتة ساخنة (هوت شوكلت)", category: "مشروبات ساخنة", price: 20000, desc: "شوكولاتة بلجيكية غنية بالحليب الساخن", isBestSeller: false },
-
-            // موهيتو
-            { id: 7, name: "موهيتو بلو بليري", category: "موهيتو", price: 22000, desc: "نعناع طازج، ليمون، ونكهة التوت الأزرق المنعشة", isBestSeller: true },
-            { id: 8, name: "موهيتو فراولة", category: "موهيتو", price: 22000, desc: "قطع الليمون والنعناع مع سيروب الفراولة والغازات", isBestSeller: false },
-
-            // عصائر فرش
-            { id: 9, name: "عصير برتقال فرش", category: "عصير فرش", price: 16000, desc: "برتقال طازج معصور مع الطلب مباشرة", isBestSeller: false },
-            { id: 10, name: "ليمون ونعناع", category: "عصير فرش", price: 17000, desc: "عصير ليمون حامض منعش مضاف له النعناع الطازج", isBestSeller: true },
-
-            // حلويات وكنافة
-            { id: 11, name: "وافل نوتيلا", category: "الحلويات", price: 30000, desc: "وافل بلجيكي دافئ مغطى بشوكولاتة النوتيلا والقطع", isBestSeller: true },
-            { id: 12, name: "كريب سبيشال", category: "الحلويات", price: 32000, desc: "شرائح الكريب مع ثلاث أنواع من الشوكولاتة الفاخرة", isBestSeller: false },
-            { id: 13, name: "كنافة نابلسية بالجبنة", category: "كنافة", price: 35000, desc: "كنافة سخنة بالجبنة الذائبة والقطر المميز", isBestSeller: true },
-
-            // إركيلة
-            { id: 14, name: "إركيلة تفاحتين نخلة", category: "إركيلة", price: 30000, desc: "إركيلة فاخرة بنكهة التفاحتين الكلاسيكية", isBestSeller: true },
-            { id: 15, name: "إركيلة حامض ونعناع", category: "إركيلة", price: 30000, desc: "إركيلة منعشة بنكهة الحامض والنعناع", isBestSeller: false }
+            { id: 1, name: "وافل شوكلا", category: "الحلويات", price: 300, img: "https://via.placeholder.com/200/2a221d/d4af37?text=وافل+شوكلا" },
+            { id: 2, name: "ستيك وافل", category: "الحلويات", price: 240, img: "https://via.placeholder.com/200/2a221d/d4af37?text=ستيك+وافل" },
+            { id: 3, name: "وافل فواكه", category: "الحلويات", price: 450, img: "https://via.placeholder.com/200/2a221d/d4af37?text=وافل+فواكه" },
+            { id: 4, name: "كريب شوكلا", category: "الحلويات", price: 300, img: "https://via.placeholder.com/200/2a221d/d4af37?text=كريب+شوكلا" },
+            
+            { id: 5, name: "إركيلة تفاحتين", category: "إركيلة", price: 250, img: "https://via.placeholder.com/200/2a221d/d4af37?text=إركيلة" },
+            { id: 6, name: "موهيتو بلو", category: "موهيتو", price: 200, img: "https://via.placeholder.com/200/2a221d/d4af37?text=موهيتو" },
+            { id: 7, name: "سبانيش لاتيه", category: "قهوة باردة", price: 220, img: "https://via.placeholder.com/200/2a221d/d4af37?text=سبانيش+لاتيه" }
         ];
 
         let cart = {};
-        let currentCategory = 'الكل';
+        let currentCategory = 'الحلويات';
 
-        // عرض القائمة
         function renderMenu(items) {
             const grid = document.getElementById('menuGrid');
             grid.innerHTML = '';
 
             if (items.length === 0) {
-                grid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 30px 0;">لا توجد أصناف مطابقة للبحث</p>`;
+                grid.innerHTML = `<p style="grid-column: span 2; text-align: center; color: var(--text-muted); padding: 30px 0;">لا توجد أصناف مطابقة</p>`;
                 return;
             }
 
@@ -417,42 +401,34 @@
                 const card = document.createElement('div');
                 card.className = 'menu-card';
                 card.innerHTML = `
-                    <div class="item-info">
-                        <div class="item-title">
-                            ${item.name}
-                            ${item.isBestSeller ? '<span class="badge">الأكثر مبيعاً</span>' : ''}
-                        </div>
-                        <div class="item-desc">${item.desc}</div>
-                        <div class="item-price">${item.price.toLocaleString()} ل.س</div>
-                    </div>
+                    <img src="${item.img}" alt="${item.name}" class="item-img">
+                    <div class="item-title">${item.name}</div>
+                    <div class="item-price">${item.price} ل.س</div>
                     <button class="add-btn" onclick="addToCart(${item.id})">
-                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-plus"></i> إضافة
                     </button>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // التصفية بحسب التبويب
-        function filterCategory(cat, btn) {
+        function filterCategory(cat, el) {
             currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            if(el) el.classList.add('active');
             filterMenu();
         }
 
-        // البحث والفلترة
         function filterMenu() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const filtered = menuData.filter(item => {
-                const matchesCat = currentCategory === 'الكل' || item.category === currentCategory;
-                const matchesSearch = item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+                const matchesCat = item.category === currentCategory;
+                const matchesSearch = item.name.toLowerCase().includes(query);
                 return matchesCat && matchesSearch;
             });
             renderMenu(filtered);
         }
 
-        // عمليات السلة
         function addToCart(itemId) {
             const item = menuData.find(i => i.id === itemId);
             if (cart[itemId]) {
@@ -485,8 +461,8 @@
             if (totalCount > 0) {
                 cartBar.style.display = 'flex';
                 document.getElementById('cartCount').innerText = totalCount;
-                document.getElementById('cartTotal').innerText = totalPrice.toLocaleString() + ' ل.س';
-                document.getElementById('modalTotal').innerText = totalPrice.toLocaleString() + ' ل.س';
+                document.getElementById('cartTotal').innerText = totalPrice + ' ل.س';
+                document.getElementById('modalTotal').innerText = totalPrice + ' ل.س';
             } else {
                 cartBar.style.display = 'none';
                 closeCartModal();
@@ -512,7 +488,7 @@
                 div.innerHTML = `
                     <div>
                         <div style="font-weight: 700;">${item.name}</div>
-                        <div style="color: var(--text-muted); font-size: 0.85rem;">${(item.price * item.qty).toLocaleString()} ل.س</div>
+                        <div style="color: var(--text-muted); font-size: 0.85rem;">${item.price * item.qty} ل.س</div>
                     </div>
                     <div class="cart-controls">
                         <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
@@ -524,26 +500,25 @@
             });
         }
 
-        // إرسال الطلب عبر واتساب
         function sendOrderToWhatsApp() {
-            const phone = "963900000000"; // حط رقم واتساب الكافيه هون
+            const phone = "963900000000";
             let text = "مرحباً موكا كافيه، أود تقديم الطلب التالي:\n\n";
             let total = 0;
 
             Object.values(cart).forEach(item => {
                 const subtotal = item.price * item.qty;
                 total += subtotal;
-                text += `• ${item.name} (عدد ${item.qty}) - ${subtotal.toLocaleString()} ل.س\n`;
+                text += `• ${item.name} (عدد ${item.qty}) - ${subtotal} ل.س\n`;
             });
 
-            text += `\n*الإجمالي:* ${total.toLocaleString()} ل.س`;
+            text += `\n*الإجمالي:* ${total} ل.س`;
 
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
             window.open(url, '_blank');
         }
 
-        // التحميل الأولي للمنيو
-        renderMenu(menuData);
+        // تشغيل القسم الأول افتراضياً
+        filterMenu();
     </script>
 </body>
 </html>
